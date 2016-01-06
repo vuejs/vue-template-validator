@@ -40,17 +40,15 @@ describe('vue-template-validator', function () {
   it('camelCase attr', function () {
     var code =
       '<div>\n' +
-      '  <test myProp="123"></test>\n' +
-      '</div>'
+      '  <test myProp="123"></test></div>'
     var warnings = validate(code)
     expect(warnings.length).to.equal(1)
     var msg = chalk.stripColor(warnings[0])
     expect(msg).to.contain('Found camelCase attribute: myProp="123"')
     expect(msg).to.contain('Use my-prop="123" instead')
     expect(msg).to.contain('1 | <div>')
-    expect(msg).to.contain('2 |   <test myProp="123"></test>')
+    expect(msg).to.contain('2 |   <test myProp="123"></test></div>')
     expect(msg).to.contain('  |         ^')
-    expect(msg).to.contain('3 | </div>')
   })
 
   it('multiple warnings', function () {
@@ -86,6 +84,15 @@ describe('vue-template-validator', function () {
     expect(msg).to.contain('2 |   <HelloWorld myProp="123"/>')
     expect(msg).to.contain('  |               ^')
     expect(msg).to.contain('3 | </div>')
+  })
+
+  it('table', function () {
+    var warnings = validate('<table><tr><slot></slot></tr></table>')
+    expect(warnings.length).to.equal(1)
+    var msg = chalk.stripColor(warnings[0])
+    expect(msg).to.contain('Tag <slot> cannot appear inside <table>')
+    expect(msg).to.contain('1 | <table><tr><slot></slot></tr></table>')
+    expect(msg).to.contain('  |            ^')
   })
 
 })

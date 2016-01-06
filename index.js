@@ -10,19 +10,19 @@ module.exports = function (node, source) {
   var warn = function () {
     warnings.push(codeframe.apply(null, arguments))
   }
-  node.childNodes.forEach(function (node) {
-    validate(node, source, warn)
+  node.childNodes.forEach(function (node, index) {
+    validate(node, source, warn, index)
   })
   return warnings
 }
 
-function validate (node, source, warn) {
+function validate (node, source, warn, index) {
   rules.forEach(function (rule) {
-    rule(node, source, warn)
+    rule(node, source, warn, index)
   })
   if (node.childNodes) {
-    node.childNodes.forEach(function (node) {
-      validate(node, source, warn)
+    node.childNodes.forEach(function (node, index) {
+      validate(node, source, warn, index)
     })
   }
 }
