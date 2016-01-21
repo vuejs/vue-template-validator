@@ -95,7 +95,7 @@ describe('vue-template-validator', function () {
     expect(msg).to.contain('  |            ^')
   })
 
-  it('svg valid attrs', function() {
+  it('svg valid tags', function() {
     var code =
       '<svg>\n' +
       '  <linearGradient></linearGradient>\n' +
@@ -113,7 +113,7 @@ describe('vue-template-validator', function () {
     expect(msg).to.not.exist
   })
 
-  it('svg invalid attrs', function() {
+  it('svg invalid tag', function() {
     var code =
       '<svg>\n' +
       '  <fooBar></fooBar>\n' +
