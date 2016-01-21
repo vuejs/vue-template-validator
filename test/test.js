@@ -95,4 +95,37 @@ describe('vue-template-validator', function () {
     expect(msg).to.contain('  |            ^')
   })
 
+  it('svg valid tags', function() {
+    var code =
+      '<svg>\n' +
+      '  <linearGradient></linearGradient>\n' +
+      '  <clipPath></clipPath>\n' +
+      '</svg>'
+    var warnings = validate(code)
+    expect(warnings.length).to.equal(0)
+    var msg
+    // linearGradient
+    msg = chalk.stripColor(warnings[0])
+    expect(msg).to.not.exist
+
+    // clipPath
+    msg = chalk.stripColor(warnings[1])
+    expect(msg).to.not.exist
+  })
+
+  it('svg invalid tag', function() {
+    var code =
+      '<svg>\n' +
+      '  <fooBar></fooBar>\n' +
+      '</svg>'
+    var warnings = validate(code)
+    expect(warnings.length).to.equal(1)
+    var msg = chalk.stripColor(warnings[0])
+    expect(msg).to.contain('Found camelCase tag: <fooBar>')
+    expect(msg).to.contain('Use <foo-bar> instead')
+    expect(msg).to.contain('1 | <svg>')
+    expect(msg).to.contain('2 |   <fooBar></fooBar>')
+    expect(msg).to.contain('  |   ^')
+    expect(msg).to.contain('3 | </svg>')
+  })
 })
