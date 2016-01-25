@@ -19,6 +19,19 @@ describe('vue-template-validator', function () {
     expect(msg).to.contain('2 |   <test/>')
     expect(msg).to.contain('  |   ^')
     expect(msg).to.contain('3 | </div>')
+
+    code =
+      '<div>\n' +
+      '  <test/></test>\n' +
+      '</div>'
+    warnings = validate(code)
+    expect(warnings.length).to.equal(1)
+    msg = chalk.stripColor(warnings[0])
+    expect(msg).to.contain('Invalid self-closing tag: <test/>')
+    expect(msg).to.contain('1 | <div>')
+    expect(msg).to.contain('2 |   <test/></test>')
+    expect(msg).to.contain('  |   ^')
+    expect(msg).to.contain('3 | </div>')
   })
 
   it('camelCase tag', function () {
