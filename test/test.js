@@ -141,4 +141,10 @@ describe('vue-template-validator', function () {
     expect(msg).to.contain('  |   ^')
     expect(msg).to.contain('3 | </svg>')
   })
+
+  it('svg camelCase attrs', function () {
+    var code = '<svg viewBox="x"><image preserveAspectRatio="x"></svg>'
+    var warnings = validate(code)
+    expect(warnings.length).to.equal(0)
+  })
 })
