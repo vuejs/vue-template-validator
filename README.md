@@ -11,3 +11,7 @@ warnings.forEach(function (msg) {
   console.log(msg)
 })
 ```
+
+## License
+
+[MIT](http://opensource.org/licenses/MIT)
